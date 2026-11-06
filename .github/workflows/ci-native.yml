@@ -3,12 +3,12 @@ name: Flask App CI
 on:
   push:
     branches: [ master, main ]
-  pull-request:
+  pull_request:
     branches: [ master, main ]
 
 jobs:
   bouild-and-test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Chekout repasitory
@@ -27,12 +27,11 @@ jobs:
       - name: Intioalize database
         run: |
           python -c "import sqlite3; conn = sqlite3.connect('todo.db'); conn.close()" || true
-          if [ -f init_db.py]; then python init.py; fi
+          if [ -f init_db.py ]; then python init.py; fi
 
       - name: Smoke test Flask server
         run: |
-          export FLASK_APP=app.py
-          python -m flask tun --host=127.0.0.1 --port=5000 &
+          python manage.py run --host=127.0.0.1 --port=5000 &
           sleep 5
-          curl -i http://127.0.0.1:5000/
+          curl -f -i http://127.0.0.1:7345/
 
