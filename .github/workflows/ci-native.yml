@@ -31,7 +31,7 @@ jobs:
 
       - name: Smoke test Flask server
         run: |
-          python manage.py runserver --host=127.0.0.1 --port=5000 &
+          python manage.py runserver --host=127.0.0.1 --port=7345 &
           sleep 5
           curl -f -i http://127.0.0.1:7345/
 
